@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Diagnostics.CodeAnalysis;
 namespace ConsoleApp4
 {
     class Program
@@ -55,17 +55,41 @@ namespace ConsoleApp4
 
             //var s = new CalsYo().DietPlanPerformance(new int[] { 6, 5, 0, 0 }, 2, 1, 5);
             //Console.WriteLine(s);
-            var three = new TreeNode(3);
-            var four = new TreeNode(4);
-            var five = new TreeNode(5);
-            var one = new TreeNode(1);
-            var two = new TreeNode(2);
-            three.left = four;
-            three.right = five;
-            four.left = one;
-            four.right = two;
-            var s = new IsSubTree().IsSubtree(three, four);
-            Console.WriteLine(s);
+            //var three = new TreeNode(3);
+            //var four = new TreeNode(4);
+            //var five = new TreeNode(5);
+            //var one = new TreeNode(1);
+            //var two = new TreeNode(2);
+            //three.left = four;
+            //three.right = five;
+            //four.left = one;
+            //four.right = two;
+            //var s = new IsSubTree().IsSubtree(three, four);
+            //Console.WriteLine(s);
+            //var ne = new GenerateSpiralOfNumbers().GenerateMatrix(3);
+
+            //var list = new List<IList<string>>();
+            //list.Add(new List<string>() { "happy", "joy" });
+            //list.Add(new List<string>() { "sad", "sorrow" });
+            //list.Add(new List<string>() { "joy", "cheerful" });
+            //var so = new Synonyms().GenerateSentences(list, "I am happy today but was sad yesterday");
+            //foreach (var s in so) { Console.WriteLine( s); }
+            //list = new List<IList<string>>();
+            //list.Add(new List<string>() { "a", "QrbCl" });
+            //so = new Synonyms().GenerateSentences(list, "d QrbCl ya ya NjZQ");
+            //foreach (var s in so) { Console.WriteLine( s); }
+            //var two = new TreeNode(2);
+            //var one = new TreeNode(1);
+            //var four = new TreeNode(4);
+            //two.left = one;
+            //two.right = four;
+            //var newOne = new TreeNode(1);
+            //var zero = new TreeNode(0);
+            //var three = new TreeNode(3);
+            //newOne.left = zero;
+            //newOne.right = three;
+            //var sol = new AnyTwoNodesSumsToTarget().TwoSumBSTs(two, newOne, 5);
+            //Console.WriteLine(sol);
         }
     }
 }
