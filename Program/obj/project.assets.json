@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\karti\\Desktop\\LeetCode\\Program\\ConsoleApp4.csproj",
-      "projectName": "ConsoleApp4",
-      "projectPath": "C:\\Users\\karti\\Desktop\\LeetCode\\Program\\ConsoleApp4.csproj",
+      "projectUniqueName": "C:\\Users\\karti\\Desktop\\LeetCode\\Program\\Alorithms.csproj",
+      "projectName": "Alorithms",
+      "projectPath": "C:\\Users\\karti\\Desktop\\LeetCode\\Program\\Alorithms.csproj",
       "packagesPath": "C:\\Users\\karti\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\karti\\Desktop\\LeetCode\\Program\\obj\\",
       "projectStyle": "PackageReference",
