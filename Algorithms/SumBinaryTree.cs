@@ -1,60 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class SumBinaryTree
+
+namespace Algorithms
 {
-
-    List<int> list = new List<int>();
-    int Sum;
-    public int SumRootToLeaf(TreeNode root)
+    public class SumBinaryTree
     {
-        Travese(root);
 
-        // Tervese Tree from left to right
-        // keep track on binary numbers
-        // when you hit a leaf
-        // convert binary into number and add to tree
+        List<int> list = new List<int>();
+        int Sum;
+        public int SumRootToLeaf(TreeNode root)
+        {
+            Travese(root);
 
-        return Sum;
-    }
-    private void Travese(TreeNode node)
-    {
-        list.Add(node.val);
-        if (node.left != null)
-        {
-            Travese(node.left);
+            // Tervese Tree from left to right
+            // keep track on binary numbers
+            // when you hit a leaf
+            // convert binary into number and add to tree
+
+            return Sum;
         }
-        if (node.right != null)
+        private void Travese(TreeNode node)
         {
-            Travese(node.right);
-        }
-        if (IsLeaf(node))
-        {
-            Sum += ConvertToNumber(list);
-        }
-        list.RemoveAt(list.Count - 1);
-    }
-    public int ConvertToNumber(List<int> binary)
-    {
-        var number = 0;
-        for(int i = binary.Count - 1; i >= 0 ; i--)
-        {
-            if (binary[i] == 1)
+            list.Add(node.val);
+            if (node.left != null)
             {
-                number += (int) Math.Pow(2, binary.Count - 1 - i);
+                Travese(node.left);
             }
+            if (node.right != null)
+            {
+                Travese(node.right);
+            }
+            if (IsLeaf(node))
+            {
+                Sum += ConvertToNumber(list);
+            }
+            list.RemoveAt(list.Count - 1);
         }
-        return number;
-    }
-    public bool IsLeaf(TreeNode treeNode)
-    {
-        if (treeNode.left == null && treeNode.right == null)
+        public int ConvertToNumber(List<int> binary)
         {
-            return true;
+            var number = 0;
+            for (int i = binary.Count - 1; i >= 0; i--)
+            {
+                if (binary[i] == 1)
+                {
+                    number += (int)Math.Pow(2, binary.Count - 1 - i);
+                }
+            }
+            return number;
         }
-        return false;
+        public bool IsLeaf(TreeNode treeNode)
+        {
+            if (treeNode.left == null && treeNode.right == null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
-}
     /*var betterSynonyms = new List<List<string>>();
     for(int i = 0; i < synonyms.Count; i++)
     {
@@ -94,3 +97,4 @@ public class SumBinaryTree
                                 return newList;
                             }).ToList());
 */
+}

@@ -1,19 +1,23 @@
-﻿public class IsIntergerPalindrome
+﻿
+namespace Algorithms
 {
-    public bool IsPalindrome(int x)
+    public class IsIntergerPalindrome
     {
-        if (x < 0)
+        public bool IsPalindrome(int x)
         {
-            return false;
-        }
-        var s = x.ToString();
-        for(int i = 0; i < s.Length -1; i++)
-        {
-            if (s[i] != s[s.Length - 1 - i])
+            if (x < 0)
             {
                 return false;
             }
+            var s = x.ToString();
+            for (int i = 0; i < s.Length - 1; i++)
+            {
+                if (s[i] != s[s.Length - 1 - i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
     }
 }

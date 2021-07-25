@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Algorithms;
+using Algorithms.Amazon;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -251,6 +253,58 @@ namespace AlgorithmTests
             Assert.AreEqual(-100, bunchOfInts[3]);
         }
 
+        [TestMethod]
+        public void StringToIntTest()
+        {
+            //var minValue = int.MinValue + 100;
+            //Console.WriteLine(minValue*10);
+            var input = "-19";
+            //Console.WriteLine(string.Format("input: {0:0,0}", input));
+            var result = new StringToInt().MyAtoi(input);
+            //Console.WriteLine(string.Format("Result: {0:0,0}", result));
+            Assert.AreEqual(-19, result);
+        }  
+
+        [TestMethod]
+        public void TelephoneDigitsToCombinationsTest()
+        {
+            //Console.WriteLine("Hello World!");
+            var input = "23";
+            var solution = new TelephoneDigitsToCombinations().LetterCombinations(input);
+            //Console.WriteLine(solution);
+            //foreach (var value in solution)
+            //{
+            //    Console.Write(" {0} ", value);
+            //}
+            //Console.WriteLine();
+            Assert.AreEqual(9, solution.Count);
+        }  
+        
+        [TestMethod]
+        public void ApplicationPairsTest()
+        {
+            var list1 = new List<List<int>>();
+            list1.Add(new List<int>() { 1, 8 });
+            list1.Add(new List<int>() { 2, 7 });
+            list1.Add(new List<int>() { 3, 14 });
+            var list2 = new List<List<int>>();
+            list2.Add(new List<int>() { 1, 5 });
+            list2.Add(new List<int>() { 2, 10 });
+            list2.Add(new List<int>() { 3, 14 });
+            var r = new ApplicationPairs().ApplicationPairsAlgorithm(20, list1, list2);
+            foreach (var a in r)
+            {
+                foreach (var b in a)
+                {
+                    Console.Write(b + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine(r);
+            Assert.Inconclusive();
+        }        
+        
+        
         [TestMethod]
         public void HowMuchWaterCanHoldTest()
         {

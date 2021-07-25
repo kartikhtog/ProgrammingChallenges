@@ -1,95 +1,97 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
-public class Synonyms
+namespace Algorithms
 {
-    private class CompareStrings : IComparer<string>
+    public class Synonyms
     {
-        public int Compare(string x, string y)
+        private class CompareStrings : IComparer<string>
         {
-            for(int i = 0; i < x.Length && i < y.Length; i++)
+            public int Compare(string x, string y)
             {
-                if (x[i] < y[i])
+                for (int i = 0; i < x.Length && i < y.Length; i++)
                 {
-                    return -1;
+                    if (x[i] < y[i])
+                    {
+                        return -1;
+                    }
+                    else if (x[i] > y[i])
+                    {
+                        return 1;
+                    }
                 }
-                else if (x[i] > y[i])
+                if (x.Length == y.Length)
+                {
+                    return 0;
+                }
+                if (x.Length > y.Length)
                 {
                     return 1;
                 }
+                return -1;
             }
-            if (x.Length == y.Length)
-            {
-                return 0;
-            }
-            if (x.Length > y.Length)
-            {
-                return 1;
-            }
-            return -1;
-        }
-    }
-
-    public IList<string> GenerateSentences(IList<IList<string>> synonyms, string text)
-    {
-        var sentences = new List<string>();
-        
-        sentences.Add(text);
-
-        foreach(var synonymWords in synonyms)
-        {
-            sentences.AddRange(MakeNewSentencesFromSynonyms(sentences, synonymWords));
         }
 
-        //var hey = from a in sentences
-        //            orderby a
-        //            select a;
-        //sentences = hey.ToList();
-
-        return sentences.OrderBy(x => x,new CompareStrings()).ToList();
-    }
-    
-    private List<string> MakeNewSentencesFromSynonyms(List<string> sentences, IList<string> synonymWords)
-    {
-        var newSentences = new List<string>();
-        foreach (var synonym in synonymWords)
+        public IList<string> GenerateSentences(IList<IList<string>> synonyms, string text)
         {
-            foreach (var sentence in sentences)
+            var sentences = new List<string>();
+
+            sentences.Add(text);
+
+            foreach (var synonymWords in synonyms)
             {
-                var indexes = getIndexesOfWords(sentence);
-                foreach (var index in indexes)
+                sentences.AddRange(MakeNewSentencesFromSynonyms(sentences, synonymWords));
+            }
+
+            //var hey = from a in sentences
+            //            orderby a
+            //            select a;
+            //sentences = hey.ToList();
+
+            return sentences.OrderBy(x => x, new CompareStrings()).ToList();
+        }
+
+        private List<string> MakeNewSentencesFromSynonyms(List<string> sentences, IList<string> synonymWords)
+        {
+            var newSentences = new List<string>();
+            foreach (var synonym in synonymWords)
+            {
+                foreach (var sentence in sentences)
                 {
-                    if (synonym.Length + index <= sentence.Length && sentence.Substring(index, synonym.Length) == synonym)
+                    var indexes = getIndexesOfWords(sentence);
+                    foreach (var index in indexes)
                     {
-                        foreach(var newWord in synonymWords)
+                        if (synonym.Length + index <= sentence.Length && sentence.Substring(index, synonym.Length) == synonym)
                         {
-                            if (newWord != synonym)
+                            foreach (var newWord in synonymWords)
                             {
-                                newSentences.Add(sentence.Substring(0, index) + newWord + sentence.Substring(index + synonym.Length));
+                                if (newWord != synonym)
+                                {
+                                    newSentences.Add(sentence.Substring(0, index) + newWord + sentence.Substring(index + synonym.Length));
+                                }
                             }
                         }
                     }
                 }
             }
+            return newSentences;
         }
-        return newSentences;
-    }
 
-    private List<int> getIndexesOfWords(string text)
-    {
-        var list = new List<int>();
-        if (text[0] != ' ')
+        private List<int> getIndexesOfWords(string text)
         {
-            list.Add(0);
-        }
-        for(int i = 0;i < text.Length -1; i++)
-        {
-            if (text[i] == ' ' && i < text.Length -1)
+            var list = new List<int>();
+            if (text[0] != ' ')
             {
-                list.Add(i + 1);
+                list.Add(0);
             }
+            for (int i = 0; i < text.Length - 1; i++)
+            {
+                if (text[i] == ' ' && i < text.Length - 1)
+                {
+                    list.Add(i + 1);
+                }
+            }
+            return list;
         }
-        return list;
     }
 }
     /*var betterSynonyms = new List<List<string>>();

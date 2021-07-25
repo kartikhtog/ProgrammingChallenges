@@ -1,25 +1,27 @@
-﻿public class MaxProfitOnStockIndex
+﻿namespace Algorithms
 {
-    public int MaxProfit(int[] prices)
+    public class MaxProfitOnStockIndex
     {
-        if (prices == null || prices.Length < 1)
+        public int MaxProfit(int[] prices)
         {
-            return 0;
-        }
-        var lastPrice = prices[0];
-        var profit = 0;
-        foreach(var price in prices)
-        {
-            if (price > lastPrice)
+            if (prices == null || prices.Length < 1)
             {
-                profit += price - lastPrice;
+                return 0;
             }
-            lastPrice = price;
+            var lastPrice = prices[0];
+            var profit = 0;
+            foreach (var price in prices)
+            {
+                if (price > lastPrice)
+                {
+                    profit += price - lastPrice;
+                }
+                lastPrice = price;
+            }
+            return profit;
         }
-        return profit;
     }
 }
-
 
 
 

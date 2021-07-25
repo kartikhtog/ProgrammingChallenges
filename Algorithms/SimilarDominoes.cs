@@ -1,97 +1,99 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
-public class SimilarDominoes
+namespace Algorithms
 {
-    private class NumberOfDominoes
+    public class SimilarDominoes
     {
-        public int Count = 1;
-    }
-    public int NumEquivDominoPairs(int[][] dominoes)
-    {
-        if (dominoes == null || dominoes.Length <= 1)
+        private class NumberOfDominoes
         {
-            return 0;
+            public int Count = 1;
         }
-
-        var sameDominoCount = new Dictionary<string, NumberOfDominoes>();
-        
-        foreach (var domino in dominoes)
+        public int NumEquivDominoPairs(int[][] dominoes)
         {
-            NumberOfDominoes count;
-            if (sameDominoCount.TryGetValue(domino[0].ToString() + domino[1].ToString(), out count))
+            if (dominoes == null || dominoes.Length <= 1)
             {
-                count.Count++;
+                return 0;
             }
-            else
-            {
-                sameDominoCount.Add(domino[0].ToString()+domino[1].ToString(), new NumberOfDominoes());
-            }
-        }
-        
-        var sortedDominoes = sameDominoCount.OrderBy(x => x.Key).ToList();
-        var numEqual = 0;
 
-        for (int i = 0; i < sortedDominoes.Count; i++)
-        {
-            for(int j = i + 1; j < sortedDominoes.Count; j++)
+            var sameDominoCount = new Dictionary<string, NumberOfDominoes>();
+
+            foreach (var domino in dominoes)
             {
-                var first = sortedDominoes[i];
-                var second = sortedDominoes[j];
+                NumberOfDominoes count;
+                if (sameDominoCount.TryGetValue(domino[0].ToString() + domino[1].ToString(), out count))
                 {
-                    if (DominoesAreEqual(first.Key, second.Key))
+                    count.Count++;
+                }
+                else
+                {
+                    sameDominoCount.Add(domino[0].ToString() + domino[1].ToString(), new NumberOfDominoes());
+                }
+            }
+
+            var sortedDominoes = sameDominoCount.OrderBy(x => x.Key).ToList();
+            var numEqual = 0;
+
+            for (int i = 0; i < sortedDominoes.Count; i++)
+            {
+                for (int j = i + 1; j < sortedDominoes.Count; j++)
+                {
+                    var first = sortedDominoes[i];
+                    var second = sortedDominoes[j];
                     {
-                        numEqual += first.Value.Count * second.Value.Count;
+                        if (DominoesAreEqual(first.Key, second.Key))
+                        {
+                            numEqual += first.Value.Count * second.Value.Count;
+                        }
                     }
                 }
             }
-        }
 
-        foreach(var domino in sortedDominoes)
-        {
-            if (domino.Value.Count > 1)
+            foreach (var domino in sortedDominoes)
             {
-                numEqual += nCr(domino.Value.Count, 2);
+                if (domino.Value.Count > 1)
+                {
+                    numEqual += nCr(domino.Value.Count, 2);
+                }
             }
+
+            return numEqual;
         }
 
-        return numEqual;
-    }
-
-    private bool DominoesAreEqual(string dominoOne, string dominoTwo)
-    {
-        if (dominoOne == dominoTwo)
+        private bool DominoesAreEqual(string dominoOne, string dominoTwo)
         {
-            return true;
+            if (dominoOne == dominoTwo)
+            {
+                return true;
+            }
+            else if (dominoOne[0] == dominoTwo[1] && dominoOne[1] == dominoTwo[0])
+            {
+                return true;
+            }
+            return false;
         }
-        else if (dominoOne[0] == dominoTwo[1] && dominoOne[1] == dominoTwo[0])
+        private int fact(int factOf)
         {
-            return true;
+            var result = 1;
+            while (factOf != 1)
+            {
+                result *= factOf;
+                factOf--;
+            }
+            return result;
         }
-        return false;
-    }
-    private int fact(int factOf)
-    {
-        var result = 1;
-        while(factOf != 1)
+        public int nPr(int n, int r)
         {
-            result *= factOf;
-            factOf--;
+            var result = 1;
+            while (n != r)
+            {
+                result *= n;
+                n--;
+            }
+            return result;
         }
-        return result;
-    }
-    public int nPr(int n, int r)
-    {
-        var result = 1;
-        while (n != r)
+        private int nCr(int n, int r)
         {
-            result *= n;
-            n--;
+            return nPr(n, n - r) / fact(r);
         }
-        return result;
-    }
-    private int nCr(int n, int r)
-    {
-        return nPr(n, n-r) / fact(r);
     }
 }

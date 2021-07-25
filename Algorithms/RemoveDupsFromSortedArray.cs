@@ -1,27 +1,30 @@
-﻿public class RemoveDupsFromSortedArray
+﻿
+namespace Algorithms
 {
-    public int RemoveDuplicates(int[] nums)
+    public class RemoveDupsFromSortedArray
     {
-        if (nums == null)
+        public int RemoveDuplicates(int[] nums)
         {
-            return 0;
-        }
-        var skip = 0;
-        var index = 0;
-        while (index < nums.Length -1)
-        {
-            index++;
-            if (nums[index - skip -1] == nums[index])
+            if (nums == null)
             {
-                skip++;
+                return 0;
             }
-            nums[index - skip] = nums[index];
+            var skip = 0;
+            var index = 0;
+            while (index < nums.Length - 1)
+            {
+                index++;
+                if (nums[index - skip - 1] == nums[index])
+                {
+                    skip++;
+                }
+                nums[index - skip] = nums[index];
+            }
+            return nums.Length - skip;
         }
-        return nums.Length - skip;
     }
+
 }
-
-
 
 
 

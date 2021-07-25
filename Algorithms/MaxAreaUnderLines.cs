@@ -1,30 +1,32 @@
 ﻿using System;
 
-public class MaxAreaUnderLines
+namespace Algorithms
 {
-    public int MaxArea(int[] height)
+    public class MaxAreaUnderLines
     {
-        var maxArea = int.MinValue;
-        var startIndex = 0;
-        var endIndex = height.Length - 1;
-        while(startIndex < endIndex)
+        public int MaxArea(int[] height)
         {
-            var area = Math.Min(height[startIndex], height[endIndex]) * (endIndex - startIndex);
-            if (area > maxArea)
+            var maxArea = int.MinValue;
+            var startIndex = 0;
+            var endIndex = height.Length - 1;
+            while (startIndex < endIndex)
             {
-                maxArea = area;
+                var area = Math.Min(height[startIndex], height[endIndex]) * (endIndex - startIndex);
+                if (area > maxArea)
+                {
+                    maxArea = area;
+                }
+                if (height[startIndex] > height[endIndex])
+                {
+                    endIndex--;
+                }
+                else
+                {
+                    startIndex++;
+                }
             }
-            if (height[startIndex] > height[endIndex])
-            {
-                endIndex--;
-            }
-            else
-            {
-                startIndex++;
-            }
+            return maxArea;
         }
-        return maxArea;
     }
 }
-
     //Console.WriteLine(string.Format("the height is {0} and distance is {1}",Math.Min(height[j],height[i]),j-i));

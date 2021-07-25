@@ -1,50 +1,54 @@
-﻿public class MergeLists
+﻿
+namespace Algorithms
 {
-    public int IndexOfLowestInt(ListNode[] lists)
+    public class MergeLists
     {
-        var indexOfLowest = -1;
-        var lowValue = int.MaxValue;
-        var currentIndex = 0;
-        foreach(var list in lists)
+        public int IndexOfLowestInt(ListNode[] lists)
         {
-            if (list != null && list.val <= lowValue)
+            var indexOfLowest = -1;
+            var lowValue = int.MaxValue;
+            var currentIndex = 0;
+            foreach (var list in lists)
             {
-                lowValue = list.val;
-                indexOfLowest = currentIndex;
+                if (list != null && list.val <= lowValue)
+                {
+                    lowValue = list.val;
+                    indexOfLowest = currentIndex;
+                }
+                currentIndex++;
             }
-            currentIndex++;
+            return indexOfLowest;
         }
-        return indexOfLowest;
-    }
- 
-    public ListNode MergeKLists(ListNode[] lists)
-    {
-        var mergedListNode = new ListNode();
-        var currentNext = mergedListNode;
-        var indexOfMin = IndexOfLowestInt(lists);
-        if (indexOfMin != -1)
+
+        public ListNode MergeKLists(ListNode[] lists)
         {
-            currentNext.val = lists[indexOfMin].val;
-            lists[indexOfMin] = lists[indexOfMin].next;
-        }
-        else
-        {
-            mergedListNode = null;
-        }
-        while (true)
-        {
-            indexOfMin = IndexOfLowestInt(lists);
+            var mergedListNode = new ListNode();
+            var currentNext = mergedListNode;
+            var indexOfMin = IndexOfLowestInt(lists);
             if (indexOfMin != -1)
             {
-                currentNext.next = new ListNode(lists[indexOfMin].val);
-                currentNext = currentNext.next;
+                currentNext.val = lists[indexOfMin].val;
                 lists[indexOfMin] = lists[indexOfMin].next;
             }
             else
             {
-                break;
+                mergedListNode = null;
             }
+            while (true)
+            {
+                indexOfMin = IndexOfLowestInt(lists);
+                if (indexOfMin != -1)
+                {
+                    currentNext.next = new ListNode(lists[indexOfMin].val);
+                    currentNext = currentNext.next;
+                    lists[indexOfMin] = lists[indexOfMin].next;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return mergedListNode;
         }
-        return mergedListNode;
     }
 }

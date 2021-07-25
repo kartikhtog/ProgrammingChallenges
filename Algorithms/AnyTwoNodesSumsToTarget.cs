@@ -1,41 +1,45 @@
-﻿public class AnyTwoNodesSumsToTarget
+﻿
+namespace Algorithms
 {
-    public bool TwoSumBSTs(TreeNode root1, TreeNode root2, int target)
+    public class AnyTwoNodesSumsToTarget
     {
+        public bool TwoSumBSTs(TreeNode root1, TreeNode root2, int target)
+        {
 
-        var found = false;
-        if (root1.val + root2.val == target)
-        {
-            return true;
-        }
-        else if (root1.val + root2.val > target)
-        {
-            // look in the left of one tree
-            if (root1.left != null)
+            var found = false;
+            if (root1.val + root2.val == target)
             {
-                found = TwoSumBSTs(root1.left, root2, target);
+                return true;
             }
-            if (!found && root2.left != null)
+            else if (root1.val + root2.val > target)
             {
-                found = TwoSumBSTs(root1, root2.left, target);
+                // look in the left of one tree
+                if (root1.left != null)
+                {
+                    found = TwoSumBSTs(root1.left, root2, target);
+                }
+                if (!found && root2.left != null)
+                {
+                    found = TwoSumBSTs(root1, root2.left, target);
+                }
             }
-        }
-        else 
-        {
-            // loook in the right of one tree
-            if (root1.right != null)
+            else
             {
-                found = TwoSumBSTs(root1.right, root2, target);
+                // loook in the right of one tree
+                if (root1.right != null)
+                {
+                    found = TwoSumBSTs(root1.right, root2, target);
+                }
+                if (!found && root2.right != null)
+                {
+                    found = TwoSumBSTs(root1, root2.right, target);
+                }
             }
-            if (!found && root2.right != null)
+            if (found)
             {
-                found = TwoSumBSTs(root1, root2.right, target);
+                return true;
             }
+            return false;
         }
-        if (found)
-        {
-            return true;
-        }
-        return false;
     }
 }

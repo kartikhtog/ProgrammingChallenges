@@ -1,30 +1,35 @@
-﻿public class ListNode
+﻿
+namespace Algorithms
 {
-     public int val;
-     public ListNode next;
-     public ListNode(int val=0, ListNode next=null) {
-        this.val = val;
-        this.next = next;
-    }
-    public ListNode Insert(params int[] items)
+    public class ListNode
     {
-        var currentNext = this;
-        if (currentNext != null)
+        public int val;
+        public ListNode next;
+        public ListNode(int val = 0, ListNode next = null)
         {
-            while(true)
+            this.val = val;
+            this.next = next;
+        }
+        public ListNode Insert(params int[] items)
+        {
+            var currentNext = this;
+            if (currentNext != null)
             {
-                if (currentNext.next == null)
+                while (true)
                 {
-                    break;
+                    if (currentNext.next == null)
+                    {
+                        break;
+                    }
+                    currentNext = currentNext.next;
                 }
+            }
+            foreach (var item in items)
+            {
+                currentNext.next = new ListNode(item);
                 currentNext = currentNext.next;
             }
+            return this;
         }
-        foreach (var item in items)
-        {
-            currentNext.next = new ListNode(item);
-            currentNext = currentNext.next;
-        }
-        return this;
     }
 }

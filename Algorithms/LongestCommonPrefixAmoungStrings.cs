@@ -1,23 +1,26 @@
-﻿public class LongestCommonPrefixAmoungStrings
+﻿namespace Algorithms
 {
-    public string LongestCommonPrefix(string[] strs)
+    public class LongestCommonPrefixAmoungStrings
     {
-        if (strs == null && strs.Length == 0)
+        public string LongestCommonPrefix(string[] strs)
         {
-            return "";
-        }
-        var prefix = strs[0];
-        for (int i = 1; i < strs.Length; i++)
-        {
-            for (int j = 0; j < prefix.Length; j++)
+            if (strs == null && strs.Length == 0)
             {
-                if (strs[i].Length - 1 < j || prefix[j]!=strs[i][j])
+                return "";
+            }
+            var prefix = strs[0];
+            for (int i = 1; i < strs.Length; i++)
+            {
+                for (int j = 0; j < prefix.Length; j++)
                 {
-                    prefix = strs[i].Substring(0, j);
-                    break;
+                    if (strs[i].Length - 1 < j || prefix[j] != strs[i][j])
+                    {
+                        prefix = strs[i].Substring(0, j);
+                        break;
+                    }
                 }
             }
+            return prefix;
         }
-        return prefix;
     }
 }
