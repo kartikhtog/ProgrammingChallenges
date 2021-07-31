@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// These are not robust test. These are just to easily walk throught an algorithms.
+/// </summary>
 namespace AlgorithmTests
 {
     [TestClass]
@@ -310,6 +313,15 @@ namespace AlgorithmTests
         {
             var result = new HowMuchWaterCanBeTrappedInside().Trap(null);
             Assert.Fail();
+        }
+
+        [TestMethod]
+        public void ValidParentheseTest()
+        {
+            var validParen = new ValidParentheses();
+            var parentheses = "({[()]})";
+            var isValid = validParen.IsValid(parentheses);
+            Assert.AreEqual(true, isValid);
         }
 
     }
