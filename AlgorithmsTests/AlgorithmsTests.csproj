@@ -17,4 +17,17 @@
     <ProjectReference Include="..\Algorithms\Algorithms.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Inputs\FindContacts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Outputs\FindContacts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Outputs\" />
+  </ItemGroup>
+
 </Project>
