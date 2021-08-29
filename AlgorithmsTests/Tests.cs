@@ -1,9 +1,12 @@
 ﻿using Algorithms;
 using Algorithms.Amazon;
+using Algorithms.Sorting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -391,6 +394,66 @@ namespace AlgorithmTests
 				{
 
 				}
+			}
+		}
+
+		[TestMethod]
+		public void BubbleSortTest()
+		{
+			TestSortingAlorithm(1000, BubbleSort<int>.Sort, "BubbleSort");
+		}
+		[TestMethod]
+		public void MergeSortTest()
+		{
+			TestSortingAlorithm(1000, MergeSort<int>.Sort, "MergeSort");
+		}
+		[TestMethod]
+		public void QuickSortTest()
+		{
+			TestSortingAlorithm(1000, QuickSort<int>.Sort, "QuickSort");
+		}	
+		[TestMethod]
+		public void RedixSortTest()
+		{
+			TestSortingAlorithm(1000, RadixSort<int>.Sort, "RadixSort");
+		}
+
+
+		public void TestSortingAlorithm(int length, Func<int[],int[]> sortingAlorithm, string sortingAlorithmType = "Implmented")
+		{
+			var random = new Random(2021);
+			var list = new List<int>();
+			var max = length > int.MaxValue ? int.MaxValue : length;
+			for (int i = 0; i < length; i++)
+			{
+				list.Add(random.Next(-1*(length-1), length));
+			}
+			var copyList = list.Select(x => x);
+			var input = list.ToArray();
+
+			var sw = new Stopwatch();
+			// out Sorting Time
+			sw.Start();
+			var sortedList = sortingAlorithm(input);
+			sw.Stop();
+			var timeForOurSorting = sw.Elapsed;
+			
+			sw.Reset();
+			// Linq sorting time.
+			sw.Start();
+			var sortedCopyListTemp = copyList.OrderBy(x => x);
+			sw.Stop();
+			var linqSortingTime = sw.Elapsed;
+			
+			Console.WriteLine("{0,-14}: {1}.", sortingAlorithmType, timeForOurSorting);
+			Console.WriteLine("{0,-14}: {1}.", "Linq", linqSortingTime);
+
+			var sortedCopyList = sortedCopyListTemp.ToArray();
+
+			for (int i = 0; i < length; i++)
+			{
+				//Console.WriteLine(string.Format("Expected: {0}, Actual: {1}", sortedCopyList[i], sortedList[i]));
+				Assert.AreEqual(sortedCopyList[i], sortedList[i]);
 			}
 		}
 
