@@ -396,6 +396,20 @@ namespace AlgorithmTests
 				}
 			}
 		}
+		[TestMethod]
+		public void CompareSortingAlorithms()
+		{
+			var numItems = 10000;
+			var bubble = TestSortingAlorithm(numItems, BubbleSort<int>.Sort, "BubbleSort").TotalMilliseconds;
+			var merge = TestSortingAlorithm(numItems, MergeSort<int>.Sort, "MergeSort").TotalMilliseconds;
+			var quick = TestSortingAlorithm(numItems, QuickSort<int>.Sort, "QuickSort").TotalMilliseconds;
+			var max = HelperMethods<int>.Max(bubble, merge, quick);
+			Console.WriteLine(string.Format(
+				"BubbleSort: {0:P}\nMergeSort: {1:P}\nQuickSort: {2:P}\n", 
+				bubble/ max, 
+				merge / max,
+				quick / max));
+		}
 
 		[TestMethod]
 		public void BubbleSortTest()
@@ -405,57 +419,233 @@ namespace AlgorithmTests
 		[TestMethod]
 		public void MergeSortTest()
 		{
+			//TestSortingAlorithm(100, MergeSort<int>.Sort, "MergeSort", enableDebug: true);
 			TestSortingAlorithm(1000, MergeSort<int>.Sort, "MergeSort");
 		}
 		[TestMethod]
 		public void QuickSortTest()
 		{
-			TestSortingAlorithm(1000, QuickSort<int>.Sort, "QuickSort");
+			TestSortingAlorithm(10000, QuickSort<int>.Sort, "QuickSort", enableDebug: false);
 		}	
 		[TestMethod]
 		public void RedixSortTest()
 		{
-			TestSortingAlorithm(1000, RadixSort<int>.Sort, "RadixSort");
+			TestSortingAlorithm(1000, RadixSort.Sort, "RadixSort", enableDebug: true);
 		}
 
 
-		public void TestSortingAlorithm(int length, Func<int[],int[]> sortingAlorithm, string sortingAlorithmType = "Implmented")
+		public TimeSpan TestSortingAlorithm(int lengthOfRandomList, Func<int[],int[]> sortingAlorithm, string sortingAlorithmType = "Implmented", bool enableDebug = false)
 		{
-			var random = new Random(2021);
-			var list = new List<int>();
-			var max = length > int.MaxValue ? int.MaxValue : length;
-			for (int i = 0; i < length; i++)
+			var randomGenerator = new Random(2021);
+			var randomGeneratedList = new List<int>();
+			for (int i = 0; i < lengthOfRandomList; i++)
 			{
-				list.Add(random.Next(-1*(length-1), length));
+				randomGeneratedList.Add(randomGenerator.Next(-1*(lengthOfRandomList-1), lengthOfRandomList));
 			}
-			var copyList = list.Select(x => x);
-			var input = list.ToArray();
+			var copyOfGeneratedList = randomGeneratedList.Select(x => x);
+			var inputForSorting = randomGeneratedList.ToArray();
 
-			var sw = new Stopwatch();
+			var stopWatch = new Stopwatch();
+
 			// out Sorting Time
-			sw.Start();
-			var sortedList = sortingAlorithm(input);
-			sw.Stop();
-			var timeForOurSorting = sw.Elapsed;
+			stopWatch.Start();
+			var sortedListResult = sortingAlorithm(inputForSorting);
+			stopWatch.Stop();
+			var ourAlgorithmSortingTime = stopWatch.Elapsed;
 			
-			sw.Reset();
+			stopWatch.Reset();
+
 			// Linq sorting time.
-			sw.Start();
-			var sortedCopyListTemp = copyList.OrderBy(x => x);
-			sw.Stop();
-			var linqSortingTime = sw.Elapsed;
+			stopWatch.Start();
+			var linqSortedList = copyOfGeneratedList.OrderBy(x => x);
+			stopWatch.Stop();
+			var linqSortingTime = stopWatch.Elapsed;
 			
-			Console.WriteLine("{0,-14}: {1}.", sortingAlorithmType, timeForOurSorting);
+			Console.WriteLine("{0,-14}: {1}.", sortingAlorithmType, ourAlgorithmSortingTime);
 			Console.WriteLine("{0,-14}: {1}.", "Linq", linqSortingTime);
 
-			var sortedCopyList = sortedCopyListTemp.ToArray();
+			var linqSortedArray = linqSortedList.ToArray();
 
-			for (int i = 0; i < length; i++)
+			for (int i = 0; i < lengthOfRandomList; i++)
 			{
-				//Console.WriteLine(string.Format("Expected: {0}, Actual: {1}", sortedCopyList[i], sortedList[i]));
-				Assert.AreEqual(sortedCopyList[i], sortedList[i]);
+				if (enableDebug)
+				{
+					Console.WriteLine(string.Format("Expected: {0}, Actual: {1}", linqSortedArray[i], sortedListResult[i]));
+				}
+				else
+				{
+					Assert.AreEqual(linqSortedArray[i], sortedListResult[i]);
+				}
+			}
+			return ourAlgorithmSortingTime;
+		}
+
+		[TestMethod]
+		public void RadioCoverageTest()
+		{
+			var list = new List<int>();
+			list.Add(1);list.Add(2); list.Add(3); list.Add(4);list.Add(5);
+			var range = 1;
+			var numRadios = RadioConverage.hackerlandRadioTransmitters(list, range);
+			Assert.AreEqual(2, numRadios);
+		}
+		[TestMethod]
+		public void IceCreamParlorTest()
+		{
+			var list = new List<int>();
+			list.AddItems(1, 4, 5, 3, 2);
+			var money = 4;
+			var numRadios = icecreamParlorClass.icecreamParlor(money, list);
+			Assert.AreEqual(1, numRadios[0]);
+			Assert.AreEqual(4, numRadios[1]);
+		}	
+		[TestMethod]
+		public void IceCreamParlorTest2()
+		{
+			
+			var list = new List<int>();
+			var array = "5 75 25";
+			var array2 = array.Split(' ');
+			foreach(var item in array2)
+			{
+				list.Add(int.Parse(item));
+			}
+			var money = 100;
+			var numRadios = icecreamParlorClass.icecreamParlor(money, list);
+			Assert.AreEqual(2, numRadios[0]);
+			Assert.AreEqual(3, numRadios[1]);
+		}
+	
+		[TestMethod]
+		public void KightsOnAChessBoardTest() 
+		{
+			var result = KnightlOnAChessboardClass.knightlOnAChessboard(10);
+			foreach (var list in result)
+			{
+				Console.Write(String.Format("{0,-1}","["));
+				foreach(var item in list){
+					Console.Write(string.Format("{0,4:N0}" ,item));
+				}
+				Console.Write(String.Format("{0,3}","]"));
+				Console.WriteLine();
 			}
 		}
+
+
+
+		[TestMethod]
+		public void MinHeapTest()
+		{
+			var list = new List<string>();
+			list.AddItems("1 4", "1 9", "3", "2 4", "3");
+			var minHeap = new MinHeap(list);
+		}
+		
+		[TestMethod]
+		public void MinHeapTest2()
+		{
+			var list = new List<string>();
+			list.AddItems("1 286789035",
+							"1 255653921",
+							"1 274310529",
+							"1 494521015",
+							"3			",
+							"2 255653921",
+							"2 286789035",
+							"3			",
+							"1 236295092",
+							"1 254828111",
+							"2 254828111",
+							"1 465995753",
+							"1 85886315	",
+							"1 7959587	",
+							"1 20842598	",
+							"2 7959587	",
+							"3			",
+							"1 -51159108",
+							"3			",
+							"2 -51159108",
+							"3			",
+							"1 789534713"
+							);
+			var minHeap = new MinHeap(list);
+		}
+
+
+		[TestMethod]
+		public void MinHeapTest3()
+		{
+			var input = ReadInputFile("heapinput.txt").ToList();
+			input = input.GetRange(1, input.Count() - 1);
+			var minHeapOutput = new MinHeap(input, storeValue: true, printToConsole: false);
+			var expected = ReadOutputFile("heapoutput.txt").ToList().Select(x => int.Parse(x)).ToList();
+			var actual = minHeapOutput.Values;
+			var min = expected.Count < actual.Count ? expected.Count : actual.Count;
+			for (int i = 0; i < min; i++)
+			{
+				Console.WriteLine(string.Format("expected vs actual {0}:{1}",expected[i],actual[i]));
+				Assert.AreEqual(expected[i], actual[i]);
+			}
+			Assert.AreEqual(expected.Count, actual.Count);
+
+			
+		}	
+		[TestMethod]
+		public void NumOnesTest()
+		{
+			var random = new Random();
+			var list = new List<uint>();
+			for(int i =0;i< 10000; i++)
+			{
+				uint thirtyBits = (uint)random.Next(1 << 30);
+				uint twoBits = (uint)random.Next(1 << 2);
+				uint fullRange = (thirtyBits << 2) | twoBits;
+				list.Add(fullRange);
+			}
+			var list2 = new List<uint>();
+			foreach(var item in list)
+			{
+				list2.Add(item);
+			}
+			var stopWatch = new Stopwatch();
+			stopWatch.Start();
+			foreach (var item in list2)
+			{
+				NumOnes.HammingWeight(item);
+			}
+			stopWatch.Stop();
+			Console.WriteLine(string.Format("Time Elaped using bitwise method is {0}", stopWatch.Elapsed));
+			stopWatch.Reset();
+			// out Sorting Time
+			stopWatch.Start();
+			foreach(var item in list)
+			{
+				NumOnes.HammingWeight2(item);
+			}
+			stopWatch.Stop();
+			Console.WriteLine(string.Format("Time Elaped using string method is {0}", stopWatch.Elapsed));
+			stopWatch.Reset();
+		}
+				
+		[TestMethod]
+		public void RunningMedianTest()
+		{
+			var input = new List<int>();
+			input.AddItems(
+							1,
+							2,
+							3,
+							4,
+							5,
+							6);
+			var hey = new MedianNumber();
+			var returnitems = hey.runningMedian(input);
+			
+
+			
+		}
+
+
 
 		public string[] ReadInputFile(string fileName)
 		{
@@ -467,3 +657,14 @@ namespace AlgorithmTests
 		}
 	}
 }
+/*
+ List<int> input = new List<int>();
+
+// first read input till there are nonempty items, means they are not null and not ""
+// also add read item to list do not need to read it again    
+string line;
+while ((line = Console.ReadLine()) != null && line != "") {
+     input.Add(int.Parse(line));
+}
+
+ */

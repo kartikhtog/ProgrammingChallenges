@@ -19,7 +19,7 @@ namespace Algorithms.Sorting
 				var exchangeHappened = false;
 				for (int j = 0; j < length - i -1; j++)
 				{
-					if (elements[j].CompareTo(elements[j+1])>0)
+					if (elements.IsFirstBigger(j,j+1))
 					{
 						elements.Swap(j, j + 1);
 						exchangeHappened = true;
