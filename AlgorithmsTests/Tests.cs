@@ -1,6 +1,7 @@
 ﻿using Algorithms;
 using Algorithms.Amazon;
 using Algorithms.Sorting;
+using AlgorithmsTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -643,6 +644,63 @@ namespace AlgorithmTests
 			
 
 			
+		}
+
+		[TestMethod]
+		public void PrintAllPrimes()
+		{
+			var getPrimes = new FindAllPrimes();
+			//foreach(var prime in getPrimes.EvenBetterApproach(10000))
+			//{
+			//	Console.Write(prime + " ");
+			//}
+			//Console.WriteLine();
+			var measure = new MeasureTimeOfFunctions<int, IEnumerable<int>>();
+			var sizes = new List<int>();
+			for (int i = 10000; i <= 6000000; i += 10000)
+			{
+				sizes.Add(i);
+			}
+			//sizes.Addd(1000).Addd(2000).Addd(3000).Addd(4000).Addd(5000);
+			foreach (var size in sizes)
+			{
+				measure.Measure(size, null,
+					//getPrimes.SimpleApproach(),
+					//getPrimes.SlighlyBetterApproach(),
+					getPrimes.BestApproach()
+					);
+			}
+			//var max = 10000;
+			//measure.Measure(max, null, 
+			//	getPrimes.SimpleApproach(), 
+			//	getPrimes.SlighlyBetterApproach(),
+			//	getPrimes.EvenBetterApproach()
+			//	);
+			//max = 20000;
+			//measure.Measure(max, null, 
+			//	getPrimes.SimpleApproach(), 
+			//	getPrimes.SlighlyBetterApproach(),
+			//	getPrimes.EvenBetterApproach()
+			//	);
+			//max = 100000;
+			//measure.Measure(max, null, 
+			//	getPrimes.SimpleApproach(), 
+			//	getPrimes.SlighlyBetterApproach(),
+			//	getPrimes.EvenBetterApproach()
+			//	);
+			//measure.PrintTimes();
+			Console.WriteLine(measure.GetTimeInCSV(sizes));
+			//var primes = primeClassObject.FindPrimes(max);
+			//var numberOfPrimes = 0;
+			//foreach(var prime in primes)
+			//{
+			//	numberOfPrimes++;
+			//	Console.Write(prime + " ");
+			//	if (numberOfPrimes % 10 == 0)
+			//	{
+			//		Console.WriteLine();
+			//	}
+			//}
 		}
 
 
